@@ -17,17 +17,17 @@ static cv::Mat resizePhoto(cv::Mat& photo, const std::size_t newWdith, const std
     return resizedPhoto;
 }
 
-static cv::Mat resizePhotoByWidthMaintainGeometry(cv::Mat& photo, const std::size_t maxWdith)
+static cv::Mat resizePhotoByWidthMaintainGeometry(cv::Mat& photo, const std::size_t maxWidth)
 {
-    if (static_cast<std::size_t>(photo.cols)  <= maxWdith)
+    if (static_cast<std::size_t>(photo.cols)  <= maxWidth)
     {
         return photo;
     }
 
-    double ratio = static_cast<double>(maxWdith) / static_cast<double>(photo.cols);
+    double ratio = static_cast<double>(maxWidth) / static_cast<double>(photo.cols);
     std::size_t newHeight = static_cast<int>(photo.rows * ratio);
 
-    return resizePhoto(photo, maxWdith, newHeight);
+    return resizePhoto(photo, maxWidth, newHeight);
 }
 
 static cv::Mat resizePhotoByHeightMaintainGeometry(cv::Mat& photo, const std::size_t maxHeight)
@@ -71,9 +71,9 @@ static bool saveResizedPhoto(cv::Mat& resizedPhoto, const std::string webSafeNam
 
 static cv::Mat resizeByUserSpecification(cv::Mat& photo, const PhotoOptions& photoOptions)
 {
-    if (photoOptions.maxWdith > 0 && photoOptions.maxHeight > 0)
+    if (photoOptions.maxWidth > 0 && photoOptions.maxHeight > 0)
     {
-        return resizePhoto(photo, photoOptions.maxWdith, photoOptions.maxHeight);
+        return resizePhoto(photo, photoOptions.maxWidth, photoOptions.maxHeight);
     }
 
     if (photoOptions.scaleFactor > 0)
@@ -83,9 +83,9 @@ static cv::Mat resizeByUserSpecification(cv::Mat& photo, const PhotoOptions& pho
 
     if (photoOptions.maintainRatio)
     {
-        if (photoOptions.maxWdith > 0)
+        if (photoOptions.maxWidth > 0)
         {
-            return resizePhotoByWidthMaintainGeometry(photo, photoOptions.maxWdith);
+            return resizePhotoByWidthMaintainGeometry(photo, photoOptions.maxWidth);
         }
         if (photoOptions.maxHeight > 0)
         {
@@ -97,11 +97,11 @@ static cv::Mat resizeByUserSpecification(cv::Mat& photo, const PhotoOptions& pho
     }
     else
     {
-        if (photoOptions.maxWdith > 0 && photoOptions.maxHeight == 0)
+        if (photoOptions.maxWidth > 0 && photoOptions.maxHeight == 0)
         {
-            return resizePhotoByWidthMaintainGeometry(photo, photoOptions.maxWdith);
+            return resizePhotoByWidthMaintainGeometry(photo, photoOptions.maxWidth);
         }
-        if (photoOptions.maxHeight > 0 && photoOptions.maxWdith == 0)
+        if (photoOptions.maxHeight > 0 && photoOptions.maxWidth == 0)
         {
             return resizePhotoByHeightMaintainGeometry(photo, photoOptions.maxHeight);
         }
