@@ -2,8 +2,7 @@
 #define OPTIONS_H
 
 #include <QDialog>
-#include "FileOptions.h"
-#include "PhotoOptions.h"
+#include "PhotoReducerModel.h"
 
 namespace Ui {
 class Options;
@@ -16,11 +15,11 @@ class Options : public QDialog
 public:
     explicit Options(QWidget *parent = nullptr);
     ~Options();
-    FileOptions getFileOptions();
-    PhotoOptions getPhotoOptions();
+    void setModel(PhotoReducerModel* model);
 
 private:
     Ui::Options *ui;
+    PhotoReducerModel *photoReducermodel;
 };
 
 #endif // OPTIONS_H

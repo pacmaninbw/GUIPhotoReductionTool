@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "PhotoReducerModel.h"
+
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -14,11 +16,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void setModel(PhotoReducerModel* model);
 
     private slots:
         void on_optionsPushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
+    PhotoReducerModel *photoReducermodel;
 };
 #endif // MAINWINDOW_H

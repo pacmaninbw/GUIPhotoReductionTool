@@ -1,5 +1,0 @@
-/home/paulc/Documents/ChernickConsulting/Projects/GUIPhotoReducer/GUIPhotoReducer/build/CMakeFiles/GUIPhotoReducer.dir
-/home/paulc/Documents/ChernickConsulting/Projects/GUIPhotoReducer/GUIPhotoReducer/build/CMakeFiles/edit_cache.dir
-/home/paulc/Documents/ChernickConsulting/Projects/GUIPhotoReducer/GUIPhotoReducer/build/CMakeFiles/rebuild_cache.dir
-/home/paulc/Documents/ChernickConsulting/Projects/GUIPhotoReducer/GUIPhotoReducer/build/CMakeFiles/GUIPhotoReducer_autogen_timestamp_deps.dir
-/home/paulc/Documents/ChernickConsulting/Projects/GUIPhotoReducer/GUIPhotoReducer/build/CMakeFiles/GUIPhotoReducer_autogen.dir

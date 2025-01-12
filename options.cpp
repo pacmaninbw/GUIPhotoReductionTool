@@ -1,4 +1,5 @@
 #include "options.h"
+#include "PhotoReducerModel.h"
 #include "ui_options.h"
 
 Options::Options(QWidget *parent) :
@@ -13,16 +14,7 @@ Options::~Options()
     delete ui;
 }
 
-FileOptions Options::getFileOptions()
+void Options::setModel(PhotoReducerModel *model)
 {
-    FileOptions fileOptions;
-
-    return fileOptions;
-}
-
-PhotoOptions Options::getPhotoOptions()
-{
-    PhotoOptions photoOptions;
-
-    return photoOptions;
+    photoReducermodel = model;
 }

@@ -31,6 +31,8 @@ set(PROJECT_SOURCES
         PhotoResizer.cpp
         PhotoResizer.h
         PhotoOptions.h
+	PhotoReducerModel.h
+	PhotoReducerModel.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
