@@ -17,6 +17,15 @@ public:
     ~Options();
     void setModel(PhotoReducerModel* model);
 
+private slots:
+    void on_sourceDirectoryLineEdit_textChanged(const QString &arg1);
+
+    void on_JPGFileTypeCheckBox_stateChanged(int arg1);
+
+    void on_targetDirectoryLineEdit_textChanged(const QString &arg1);
+
+    void on_addExtensionLineEdit_textChanged(const QString &arg1);
+
 private:
     Ui::Options *ui;
     PhotoReducerModel *photoReducermodel;
