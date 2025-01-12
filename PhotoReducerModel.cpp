@@ -1,12 +1,18 @@
 #include "PhotoReducerModel.h"
 #include "photofilefinder.h"
 #include "PhotoResizer.h"
+#include <QDir>
+#include <QString>
 
 PhotoReducerModel::PhotoReducerModel(QObject *parent)
     : QObject{parent}
 {
     photoOptions.displayResized = false;
     photoOptions.maintainRatio = true;
+
+    QString startDir = QDir::currentPath();
+    fileOptions.sourceDirectory = startDir.toStdString();
+    fileOptions.targetDirectory = fileOptions.sourceDirectory;
 }
 
 bool PhotoReducerModel::fileOptionsAreGood()
