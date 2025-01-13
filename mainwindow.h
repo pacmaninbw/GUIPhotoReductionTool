@@ -24,5 +24,6 @@ public:
 private:
     Ui::MainWindow *ui;
     PhotoReducerModel *photoReducermodel;
+    void updateControlValues();
 };
 #endif // MAINWINDOW_H

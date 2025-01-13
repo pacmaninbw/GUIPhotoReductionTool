@@ -21,9 +21,9 @@ private slots:
 /*
  * File Options
  */
-    void on_sourceDirectoryLineEdit_textChanged(const QString &srcDir);
-    void on_targetDirectoryLineEdit_textChanged(const QString &target);
-    void on_addExtensionLineEdit_textChanged(const QString &extension);
+    void on_sourceDirectoryLineEdit_textEdited(const QString &srcDir);
+    void on_targetDirectoryLineEdit_textEdited(const QString &target);
+    void on_addExtensionLineEdit_textEdited(const QString &extension);
     void on_JPGFileTypeCheckBox_stateChanged(int enable);
     void on_PNGFileTypecheckBox_stateChanged(int enable);
     void on_fixFileNameCheckBox_stateChanged(int enable);
@@ -33,13 +33,15 @@ private slots:
  */
     void on_maintainRatioCheckBox_stateChanged(int enable);
     void on_displayResizedCheckBox_stateChanged(int enable);
-    void on_maxWidthLineEdit_textChanged(const QString &width);
-    void on_maxHeightLineEdit_textChanged(const QString &width);
-    void on_scaleFactorLineEdit_textChanged(const QString &scaleFactor);
+    void on_maxWidthLineEdit_textEdited(const QString &width);
+    void on_maxHeightLineEdit_textEdited(const QString &height);
+    void on_scaleFactorLineEdit_textEdited(const QString &scaleFactor);
 
 private:
     Ui::Options *ui;
     PhotoReducerModel *photoReducermodel;
+    void setFileOptionControls();
+    void setPhotoOptionControls();
 };
 
 #endif // OPTIONS_H

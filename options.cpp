@@ -18,22 +18,23 @@ void Options::setModel(PhotoReducerModel *model)
 {
     photoReducermodel = model;
 
-    ui->JPGFileTypeCheckBox->setChecked(model->getJPGFiles());
+    setFileOptionControls();
+    setPhotoOptionControls();
 }
 
-void Options::on_sourceDirectoryLineEdit_textChanged(const QString &srcDir)
+void Options::on_sourceDirectoryLineEdit_textEdited(const QString &srcDir)
 {
     std::string dir = srcDir.toStdString();
     photoReducermodel->setSourceDirectory(dir);
 }
 
-void Options::on_targetDirectoryLineEdit_textChanged(const QString &target)
+void Options::on_targetDirectoryLineEdit_textEdited(const QString &target)
 {
     std::string dir = target.toStdString();
     photoReducermodel->setTargetDirectory(dir);
 }
 
-void Options::on_addExtensionLineEdit_textChanged(const QString &extension)
+void Options::on_addExtensionLineEdit_textEdited(const QString &extension)
 {
     std::string ext = extension.toStdString();
     photoReducermodel->setPhotoExtension(ext);
@@ -69,18 +70,41 @@ void Options::on_displayResizedCheckBox_stateChanged(int enable)
     photoReducermodel->setDisplayResized(enable);
 }
 
-void Options::on_maxWidthLineEdit_textChanged(const QString &width)
+void Options::on_maxWidthLineEdit_textEdited(const QString &width)
 {
     bool hasErrors = photoReducermodel->setMaxWidth(width.toInt());
 }
 
-void Options::on_maxHeightLineEdit_textChanged(const QString &width)
+void Options::on_maxHeightLineEdit_textEdited(const QString &height)
 {
-    bool hasErrors = photoReducermodel->setMaxHeight(width.toInt());
+    bool hasErrors = photoReducermodel->setMaxHeight(height.toInt());
 }
 
-void Options::on_scaleFactorLineEdit_textChanged(const QString &scaleFactor)
+void Options::on_scaleFactorLineEdit_textEdited(const QString &scaleFactor)
 {
     bool hasErrors = photoReducermodel->setScaleFactor(scaleFactor.toInt());
+}
+
+void Options::setFileOptionControls()
+{
+    ui->JPGFileTypeCheckBox->setChecked(photoReducermodel->getJPGFiles());
+    ui->PNGFileTypecheckBox->setChecked(photoReducermodel->getPNGFiles());
+    ui->fixFileNameCheckBox->setChecked(photoReducermodel->getMakeWebSafe());
+    ui->overwriteCheckBox->setChecked(photoReducermodel->getOverwriteFiles());
+    ui->sourceDirectoryLineEdit->setText(
+        QString::fromStdString(photoReducermodel->getSourceDirectory()));
+    ui->targetDirectoryLineEdit->setText(
+        QString::fromStdString(photoReducermodel->getTargetDirectory()));
+    ui->addExtensionLineEdit->setText(
+        QString::fromStdString(photoReducermodel->getPhotoExtension()));
+}
+
+void Options::setPhotoOptionControls()
+{
+    ui->maintainRatioCheckBox->setChecked(photoReducermodel->getMaintainRation());
+    ui->displayResizedCheckBox->setChecked(photoReducermodel->getDisplayResized());
+    ui->maxWidthLineEdit->setText(QString::number(photoReducermodel->getMaxWidth()));
+    ui->maxHeightLineEdit->setText(QString::number(photoReducermodel->getMaxHeight()));
+    ui->scaleFactorLineEdit->setText(QString::number(photoReducermodel->getScaleFactor()));
 }
 

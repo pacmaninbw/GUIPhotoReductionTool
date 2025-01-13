@@ -18,15 +18,28 @@ MainWindow::~MainWindow()
 void MainWindow::setModel(PhotoReducerModel *model)
 {
     photoReducermodel = model;
+
+    updateControlValues();
 }
 
 
 void MainWindow::on_optionsPushButton_clicked()
 {
-    Options optionBox;
+    Options optionBox(this);
+
+    optionBox.setModel(photoReducermodel);
 
     if (optionBox.exec() == QDialog::Accepted)
     {
+        updateControlValues();
     }
+}
+
+void MainWindow::updateControlValues()
+{
+    ui->sourceDirectoryValueLabel->setText(
+        QString::fromStdString(photoReducermodel->getSourceDirectory()));
+    ui->targetDirectoryValueLabel->setText(
+        QString::fromStdString(photoReducermodel->getTargetDirectory()));
 }
 
