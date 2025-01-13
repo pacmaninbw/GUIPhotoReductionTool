@@ -6,6 +6,8 @@
 #include <QObject>
 #include <string>
 
+class MainWindow;
+
 class PhotoReducerModel : public QObject
 {
     Q_OBJECT
@@ -21,6 +23,7 @@ public:
     void errorWasShown() { errorsForMessage.clear(); };
     std::size_t findAllPhotos();
     std::size_t resizeAllPhotos();
+    void setMainWindowPtr(MainWindow* window) { mainWindow = window; };
 /*
  * Photo Options Methods
  */
@@ -66,6 +69,7 @@ private:
     FileOptions fileOptions;
     PhotoOptions photoOptions;
     std::string errorsForMessage;
+    MainWindow* mainWindow;
 };
 
 #endif // PHOTOREDUCERMODEL_H_

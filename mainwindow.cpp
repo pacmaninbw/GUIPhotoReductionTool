@@ -41,5 +41,17 @@ void MainWindow::updateControlValues()
         QString::fromStdString(photoReducermodel->getSourceDirectory()));
     ui->targetDirectoryValueLabel->setText(
         QString::fromStdString(photoReducermodel->getTargetDirectory()));
+    
+    if (photoReducermodel->fileOptionsAreGood() && photoReducermodel->photoOptionsAreGood())
+    {
+        initProgressBarAndLCDs();
+    }
 }
 
+void MainWindow::initProgressBarAndLCDs()
+{
+    std::size_t photosToResize = photoReducermodel->findAllPhotos();
+    ui->filesToResizeLcdNumber->display(static_cast<int>(photosToResize));
+    ui->resizedPhotosLcdNumber->display(static_cast<int>(0));
+    ui->progressBar->setRange(0, static_cast<int>(photosToResize));
+}

@@ -25,5 +25,6 @@ private:
     Ui::MainWindow *ui;
     PhotoReducerModel *photoReducermodel;
     void updateControlValues();
+    void initProgressBarAndLCDs();
 };
 #endif // MAINWINDOW_H

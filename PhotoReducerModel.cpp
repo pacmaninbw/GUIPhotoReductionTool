@@ -1,3 +1,4 @@
+#include "mainwindow.h"
 #include "PhotoReducerModel.h"
 #include "photofilefinder.h"
 #include "PhotoResizer.h"
