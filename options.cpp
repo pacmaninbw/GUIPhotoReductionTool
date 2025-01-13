@@ -17,30 +17,70 @@ Options::~Options()
 void Options::setModel(PhotoReducerModel *model)
 {
     photoReducermodel = model;
+
+    ui->JPGFileTypeCheckBox->setChecked(model->getJPGFiles());
 }
 
-void Options::on_sourceDirectoryLineEdit_textChanged(const QString &arg1)
+void Options::on_sourceDirectoryLineEdit_textChanged(const QString &srcDir)
 {
-    std::string srcDir = arg1.toStdString();
-    photoReducermodel->setSourceDirectory(srcDir);
+    std::string dir = srcDir.toStdString();
+    photoReducermodel->setSourceDirectory(dir);
 }
 
-void Options::on_targetDirectoryLineEdit_textChanged(const QString &arg1)
+void Options::on_targetDirectoryLineEdit_textChanged(const QString &target)
 {
-    std::string target = arg1.toStdString();
-    photoReducermodel->setTargetDirectory(target);
+    std::string dir = target.toStdString();
+    photoReducermodel->setTargetDirectory(dir);
 }
 
-void Options::on_addExtensionLineEdit_textChanged(const QString &arg1)
+void Options::on_addExtensionLineEdit_textChanged(const QString &extension)
 {
-    std::string extension = arg1.toStdString();
-    photoReducermodel->setPhotoExtension(extension);
+    std::string ext = extension.toStdString();
+    photoReducermodel->setPhotoExtension(ext);
 }
 
-void Options::on_JPGFileTypeCheckBox_stateChanged(int arg1)
+void Options::on_JPGFileTypeCheckBox_stateChanged(int enable)
 {
-    photoReducermodel->setJPGFiles(arg1);
+    photoReducermodel->setJPGFiles(enable);
 }
 
+void Options::on_PNGFileTypecheckBox_stateChanged(int enable)
+{
+    photoReducermodel->setPNGFiles(enable);
+}
 
+void Options::on_fixFileNameCheckBox_stateChanged(int enable)
+{
+    photoReducermodel->setMakeWebSafe(enable);
+}
+
+void Options::on_overwriteCheckBox_stateChanged(int enable)
+{
+    photoReducermodel->setOverwriteFiles(enable);
+}
+
+void Options::on_maintainRatioCheckBox_stateChanged(int enable)
+{
+    photoReducermodel->setMaintainRation(enable);
+}
+
+void Options::on_displayResizedCheckBox_stateChanged(int enable)
+{
+    photoReducermodel->setDisplayResized(enable);
+}
+
+void Options::on_maxWidthLineEdit_textChanged(const QString &width)
+{
+    bool hasErrors = photoReducermodel->setMaxWidth(width.toInt());
+}
+
+void Options::on_maxHeightLineEdit_textChanged(const QString &width)
+{
+    bool hasErrors = photoReducermodel->setMaxHeight(width.toInt());
+}
+
+void Options::on_scaleFactorLineEdit_textChanged(const QString &scaleFactor)
+{
+    bool hasErrors = photoReducermodel->setScaleFactor(scaleFactor.toInt());
+}
 
