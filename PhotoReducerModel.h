@@ -46,7 +46,7 @@ public:
     void setJPGFiles(bool enable) { fileOptions.processJPGFiles = enable; };
     bool getJPGFiles() const { return fileOptions.processJPGFiles; };
     void setPNGFiles(bool enable) { fileOptions.processPNGFiles = enable; };
-    bool getPNGFiles(bool enable) const { return fileOptions.processPNGFiles; };
+    bool getPNGFiles() const { return fileOptions.processPNGFiles; };
     void setOverwriteFiles(bool enable) { fileOptions.overWriteFiles = enable; };
     bool getOverwriteFiles() const { return fileOptions.overWriteFiles; };
     void setSourceDirectory(std::string& source) {fileOptions.sourceDirectory = source; };
