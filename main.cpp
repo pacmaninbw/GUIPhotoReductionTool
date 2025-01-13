@@ -9,7 +9,8 @@ int main(int argc, char *argv[])
 
     PhotoReducerModel photoReducermodel;
 
-    MainWindow w;
-    w.show();
+    MainWindow mainWindow;
+    mainWindow.setModel(&photoReducermodel);
+    mainWindow.show();
     return a.exec();
 }
