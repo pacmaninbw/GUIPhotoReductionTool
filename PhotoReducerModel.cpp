@@ -11,7 +11,7 @@ PhotoReducerModel::PhotoReducerModel(QObject *parent)
     photoOptions.displayResized = false;
     photoOptions.maintainRatio = true;
 
-    QString startDir = QDir::currentPath();
+    QString startDir = QDir::homePath();
     fileOptions.sourceDirectory = startDir.toStdString();
     fileOptions.targetDirectory = fileOptions.sourceDirectory;
 }
@@ -33,6 +33,12 @@ bool PhotoReducerModel::photoOptionsAreGood()
 std::size_t PhotoReducerModel::findAllPhotos()
 {
     std::size_t photosFound = 0;
+
+    if (fileOptionsAreGood() && photoOptionsAreGood())
+    {
+        photoList = buildPhotoInputAndOutputList(fileOptions);
+        photosFound = photoList.size();
+    }
 
     return photosFound;
 }

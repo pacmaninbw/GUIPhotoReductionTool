@@ -3,6 +3,7 @@
 
 #include "FileOptions.h"
 #include "PhotoOptions.h"
+#include "PhotoFileList.h"
 #include <QObject>
 #include <string>
 
@@ -70,6 +71,7 @@ private:
     PhotoOptions photoOptions;
     std::string errorsForMessage;
     MainWindow* mainWindow;
+    PhotoFileList photoList;
 };
 
 #endif // PHOTOREDUCERMODEL_H_
