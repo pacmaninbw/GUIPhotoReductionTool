@@ -22,7 +22,9 @@ private slots:
  * File Options
  */
     void on_sourceDirectoryLineEdit_textEdited(const QString &srcDir);
+    void on_sourceDirBrowsePushButton_clicked();
     void on_targetDirectoryLineEdit_textEdited(const QString &target);
+    void on_targetDirectoryBrowsePushButton_clicked();
     void on_addExtensionLineEdit_textEdited(const QString &extension);
     void on_JPGFileTypeCheckBox_stateChanged(int enable);
     void on_PNGFileTypecheckBox_stateChanged(int enable);

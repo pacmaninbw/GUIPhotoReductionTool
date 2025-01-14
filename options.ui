@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>524</width>
+    <width>572</width>
     <height>559</height>
    </rect>
   </property>
@@ -34,7 +34,7 @@
     <rect>
      <x>40</x>
      <y>20</y>
-     <width>441</width>
+     <width>501</width>
      <height>221</height>
     </rect>
    </property>
@@ -160,6 +160,32 @@
     </property>
     <property name="text">
      <string>Add Extension</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="sourceDirBrowsePushButton">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>100</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Browse</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="targetDirectoryBrowsePushButton">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>130</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
     </property>
    </widget>
   </widget>

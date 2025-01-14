@@ -1,5 +1,6 @@
 #include "options.h"
 #include "PhotoReducerModel.h"
+#include <QFileDialog>
 #include "ui_options.h"
 
 Options::Options(QWidget *parent) :
@@ -106,5 +107,32 @@ void Options::setPhotoOptionControls()
     ui->maxWidthLineEdit->setText(QString::number(photoReducermodel->getMaxWidth()));
     ui->maxHeightLineEdit->setText(QString::number(photoReducermodel->getMaxHeight()));
     ui->scaleFactorLineEdit->setText(QString::number(photoReducermodel->getScaleFactor()));
+}
+
+void Options::on_sourceDirBrowsePushButton_clicked()
+{
+    QString sourceDir = QString::fromStdString(photoReducermodel->getSourceDirectory());
+
+    sourceDir = QFileDialog::getExistingDirectory(nullptr, "Source Directory",
+        sourceDir, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+    std::string dir = sourceDir.toStdString();
+    photoReducermodel->setSourceDirectory(dir);
+
+    ui->sourceDirectoryLineEdit->setText(sourceDir);
+}
+
+void Options::on_targetDirectoryBrowsePushButton_clicked()
+{
+    QString targetDir = QString::fromStdString(photoReducermodel->getTargetDirectory());
+
+    targetDir = QFileDialog::getExistingDirectory(nullptr, "Target Directory",
+        targetDir, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+    std::string dir = targetDir.toStdString();
+    photoReducermodel->setTargetDirectory(dir);
+
+    ui->targetDirectoryLineEdit->setText(targetDir);
+
 }
 
