@@ -21,6 +21,8 @@ public:
     private slots:
         void on_optionsPushButton_clicked();
 
+        void on_resizePhotosButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     PhotoReducerModel *photoReducermodel;

@@ -55,3 +55,9 @@ void MainWindow::initProgressBarAndLCDs()
     ui->resizedPhotosLcdNumber->display(static_cast<int>(0));
     ui->progressBar->setRange(0, static_cast<int>(photosToResize));
 }
+
+void MainWindow::on_resizePhotosButton_clicked()
+{
+
+}
+
