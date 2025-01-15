@@ -44,6 +44,7 @@ private:
     PhotoReducerModel *photoReducermodel;
     void setFileOptionControls();
     void setPhotoOptionControls();
+    void showErrorMessages();
 };
 
 #endif // OPTIONS_H

@@ -1,6 +1,8 @@
 #include "options.h"
 #include "PhotoReducerModel.h"
+#include <QErrorMessage>
 #include <QFileDialog>
+#include <QMessageBox>
 #include "ui_options.h"
 
 Options::Options(QWidget *parent) :
@@ -74,16 +76,31 @@ void Options::on_displayResizedCheckBox_stateChanged(int enable)
 void Options::on_maxWidthLineEdit_textEdited(const QString &width)
 {
     bool hasErrors = photoReducermodel->setMaxWidth(width.toInt());
+    if (hasErrors)
+    {
+        showErrorMessages();
+        ui->maxWidthLineEdit->setText(QString::number(photoReducermodel->getMaxWidth()));
+    }
 }
 
 void Options::on_maxHeightLineEdit_textEdited(const QString &height)
 {
     bool hasErrors = photoReducermodel->setMaxHeight(height.toInt());
+    if (hasErrors)
+    {
+        showErrorMessages();
+        ui->maxHeightLineEdit->setText(QString::number(photoReducermodel->getMaxHeight()));
+    }
 }
 
 void Options::on_scaleFactorLineEdit_textEdited(const QString &scaleFactor)
 {
     bool hasErrors = photoReducermodel->setScaleFactor(scaleFactor.toInt());
+    if (hasErrors)
+    {
+        showErrorMessages();
+        ui->scaleFactorLineEdit->setText(QString::number(photoReducermodel->getScaleFactor()));
+    }
 }
 
 void Options::setFileOptionControls()
@@ -134,5 +151,14 @@ void Options::on_targetDirectoryBrowsePushButton_clicked()
 
     ui->targetDirectoryLineEdit->setText(targetDir);
 
+}
+
+void Options::showErrorMessages()
+{
+    QString eMessage = QString::fromStdString(photoReducermodel->getErrorString());
+    QErrorMessage errorBox(this);
+    errorBox.showMessage(eMessage);
+    errorBox.exec();
+    photoReducermodel->errorWasShown();
 }
 
