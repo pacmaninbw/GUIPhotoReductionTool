@@ -27,6 +27,18 @@ bool PhotoReducerModel::photoOptionsAreGood()
 {
     bool optionsGood = true;
 
+    if (!hasPhotoSize())
+    {
+        errorsForMessage +=
+            "A new size must be specified using Scale Factor, Maximum Width or Maximum Height\n";
+        optionsGood = false;
+    }
+
+    if (hasRatioErrors())
+    {
+        optionsGood = false;
+    }
+
     return optionsGood;
 }
 
@@ -46,6 +58,11 @@ std::size_t PhotoReducerModel::findAllPhotos()
 std::size_t PhotoReducerModel::resizeAllPhotos()
 {
     std::size_t photosResized = 0;
+
+    if (fileOptionsAreGood() && photoOptionsAreGood())
+    {
+        photosResized = resizeAllPhotosInList(photoOptions, photoList);
+    }
 
     return photosResized;
 }
@@ -87,6 +104,18 @@ bool PhotoReducerModel::setScaleFactor(int scaleFactor)
 bool PhotoReducerModel::hasRatioErrors()
 {
     bool hasErrors = false;
+
+    if (!photoOptions.maintainRatio)
+    {
+        return hasErrors;
+    }
+
+    if (photoOptions.maxWidth > 0 && photoOptions.maxHeight > 0)
+    {
+        errorsForMessage +=  "Only one of Maximum Width or Maximum Height can be used with maintain ratio\n";
+        hasErrors = true;
+    }
+
 
     return hasErrors;
 }
