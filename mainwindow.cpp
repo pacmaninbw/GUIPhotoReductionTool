@@ -20,6 +20,7 @@ void MainWindow::setModel(PhotoReducerModel *model)
     photoReducermodel = model;
 
     updateControlValues();
+    ui->resizePhotosButton->setDisabled(true);
 }
 
 
@@ -45,6 +46,7 @@ void MainWindow::updateControlValues()
     if (photoReducermodel->fileOptionsAreGood() && photoReducermodel->photoOptionsAreGood())
     {
         initProgressBarAndLCDs();
+        ui->resizePhotosButton->setEnabled(true);
     }
 }
 
@@ -58,6 +60,7 @@ void MainWindow::initProgressBarAndLCDs()
 
 void MainWindow::on_resizePhotosButton_clicked()
 {
-
+    std::size_t resizedCount = photoReducermodel->resizeAllPhotos();
+    ui->resizedPhotosLcdNumber->display(static_cast<int>(resizedCount));
 }
 
