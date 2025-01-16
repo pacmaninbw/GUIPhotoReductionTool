@@ -2,6 +2,7 @@
 #include "PhotoReducerModel.h"
 #include <QErrorMessage>
 #include <QFileDialog>
+#include <QLineEdit>
 #include <QMessageBox>
 #include "ui_options.h"
 
@@ -23,84 +24,6 @@ void Options::setModel(PhotoReducerModel *model)
 
     setFileOptionControls();
     setPhotoOptionControls();
-}
-
-void Options::on_sourceDirectoryLineEdit_textEdited(const QString &srcDir)
-{
-    std::string dir = srcDir.toStdString();
-    photoReducermodel->setSourceDirectory(dir);
-}
-
-void Options::on_targetDirectoryLineEdit_textEdited(const QString &target)
-{
-    std::string dir = target.toStdString();
-    photoReducermodel->setTargetDirectory(dir);
-}
-
-void Options::on_addExtensionLineEdit_textEdited(const QString &extension)
-{
-    std::string ext = extension.toStdString();
-    photoReducermodel->setPhotoExtension(ext);
-}
-
-void Options::on_JPGFileTypeCheckBox_stateChanged(int enable)
-{
-    photoReducermodel->setJPGFiles(enable);
-}
-
-void Options::on_PNGFileTypecheckBox_stateChanged(int enable)
-{
-    photoReducermodel->setPNGFiles(enable);
-}
-
-void Options::on_fixFileNameCheckBox_stateChanged(int enable)
-{
-    photoReducermodel->setMakeWebSafe(enable);
-}
-
-void Options::on_overwriteCheckBox_stateChanged(int enable)
-{
-    photoReducermodel->setOverwriteFiles(enable);
-}
-
-void Options::on_maintainRatioCheckBox_stateChanged(int enable)
-{
-    photoReducermodel->setMaintainRation(enable);
-}
-
-void Options::on_displayResizedCheckBox_stateChanged(int enable)
-{
-    photoReducermodel->setDisplayResized(enable);
-}
-
-void Options::on_maxWidthLineEdit_textEdited(const QString &width)
-{
-    bool hasErrors = photoReducermodel->setMaxWidth(width.toInt());
-    if (hasErrors)
-    {
-        showErrorMessages();
-        ui->maxWidthLineEdit->setText(QString::number(photoReducermodel->getMaxWidth()));
-    }
-}
-
-void Options::on_maxHeightLineEdit_textEdited(const QString &height)
-{
-    bool hasErrors = photoReducermodel->setMaxHeight(height.toInt());
-    if (hasErrors)
-    {
-        showErrorMessages();
-        ui->maxHeightLineEdit->setText(QString::number(photoReducermodel->getMaxHeight()));
-    }
-}
-
-void Options::on_scaleFactorLineEdit_textEdited(const QString &scaleFactor)
-{
-    bool hasErrors = photoReducermodel->setScaleFactor(scaleFactor.toInt());
-    if (hasErrors)
-    {
-        showErrorMessages();
-        ui->scaleFactorLineEdit->setText(QString::number(photoReducermodel->getScaleFactor()));
-    }
 }
 
 void Options::setFileOptionControls()
@@ -128,26 +51,16 @@ void Options::setPhotoOptionControls()
 
 void Options::on_sourceDirBrowsePushButton_clicked()
 {
-    QString sourceDir = QString::fromStdString(photoReducermodel->getSourceDirectory());
-
-    sourceDir = QFileDialog::getExistingDirectory(nullptr, "Source Directory",
+    QString sourceDir = QFileDialog::getExistingDirectory(nullptr, "Source Directory",
         sourceDir, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-
-    std::string dir = sourceDir.toStdString();
-    photoReducermodel->setSourceDirectory(dir);
 
     ui->sourceDirectoryLineEdit->setText(sourceDir);
 }
 
 void Options::on_targetDirectoryBrowsePushButton_clicked()
 {
-    QString targetDir = QString::fromStdString(photoReducermodel->getTargetDirectory());
-
-    targetDir = QFileDialog::getExistingDirectory(nullptr, "Target Directory",
+    QString targetDir = QFileDialog::getExistingDirectory(nullptr, "Target Directory",
         targetDir, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-
-    std::string dir = targetDir.toStdString();
-    photoReducermodel->setTargetDirectory(dir);
 
     ui->targetDirectoryLineEdit->setText(targetDir);
 
@@ -160,5 +73,106 @@ void Options::showErrorMessages()
     errorBox.showMessage(eMessage);
     errorBox.exec();
     photoReducermodel->errorWasShown();
+}
+
+bool Options::updateModelFileOptions()
+{
+    photoReducermodel->setSourceDirectory(qLineEdittoString(ui->sourceDirectoryLineEdit));
+    photoReducermodel->setTargetDirectory(qLineEdittoString(ui->targetDirectoryLineEdit));
+    photoReducermodel->setPhotoExtension(qLineEdittoString(ui->addExtensionLineEdit));
+    photoReducermodel->setJPGFiles(ui->JPGFileTypeCheckBox->isChecked());
+    photoReducermodel->setPNGFiles(ui->PNGFileTypecheckBox->isChecked());
+    photoReducermodel->setOverwriteFiles(ui->overwriteCheckBox->isChecked());
+    photoReducermodel->setMakeWebSafe(ui->fixFileNameCheckBox->isChecked());
+
+    return photoReducermodel->fileOptionsAreGood();
+}
+
+bool Options::updateModelPhotoOptions()
+{
+    bool hasPhotoErrors = false;
+
+    photoReducermodel->setMaxWidth(qLineEditToSizeT(ui->maxWidthLineEdit, "Maxium Width"));
+    if (hasNumberErrors)
+    {
+        hasPhotoErrors = true;
+    }
+
+    photoReducermodel->setMaxHeight(qLineEditToSizeT(ui->maxHeightLineEdit, "Maxium Height"));
+    if (hasNumberErrors)
+    {
+        hasPhotoErrors = true;
+    }
+
+    photoReducermodel->setScaleFactor(qLineEditToUnsignedInt(ui->scaleFactorLineEdit, "Scale Factor"));
+    if (hasNumberErrors)
+    {
+        hasPhotoErrors = true;
+    }
+
+    photoReducermodel->setMaintainRation(ui->maintainRatioCheckBox->isChecked());
+    photoReducermodel->setDisplayResized(ui->displayResizedCheckBox->isChecked());
+
+    if (!hasPhotoErrors)
+    {
+        hasPhotoErrors = (photoReducermodel->photoOptionsAreGood())? false : true;
+    }
+
+    return hasPhotoErrors;
+}
+
+std::string Options::qLineEdittoString(QLineEdit *lineEdit)
+{
+    QString input = lineEdit->text();
+    std::string output = input.toStdString();
+
+    return output;
+}
+
+std::size_t Options::qLineEditToSizeT(QLineEdit *lineEdit, QString errorName)
+{
+    hasNumberErrors = false;
+
+    bool ok;
+    std:size_t output = 0;
+    QString input = lineEdit->text();
+
+    output = static_cast<std::size_t>(input.toUInt(&ok, 10));
+    if (!ok)
+    {
+        numberErrorShow(errorName);
+        output = 0;
+    }
+
+    return output;
+}
+
+void Options::numberErrorShow(QString errorName)
+{
+    QString errorMessage = errorName + " must be an integer value";
+    QErrorMessage errorBox(this);
+    hasNumberErrors = true;
+    errorBox.showMessage(errorMessage);
+    errorBox.exec();
+}
+
+void Options::on_buttonBox_accepted()
+{
+    QString temp;
+    bool hasErrors = false;
+    if (updateModelFileOptions())
+    {
+        hasErrors = true;
+    }
+
+    if (updateModelPhotoOptions())
+    {
+        hasErrors = true;
+    }
+
+    if (hasErrors)
+    {
+        showErrorMessages();
+    }
 }
 

@@ -53,13 +53,13 @@ public:
     bool getPNGFiles() const { return fileOptions.processPNGFiles; };
     void setOverwriteFiles(bool enable) { fileOptions.overWriteFiles = enable; };
     bool getOverwriteFiles() const { return fileOptions.overWriteFiles; };
-    void setSourceDirectory(std::string& source) {fileOptions.sourceDirectory = source; };
+    void setSourceDirectory(std::string source) {fileOptions.sourceDirectory = source; };
     std::string getSourceDirectory() const { return fileOptions.sourceDirectory; };
-    void setTargetDirectory(std::string& target) {fileOptions.targetDirectory = target; };
+    void setTargetDirectory(std::string target) {fileOptions.targetDirectory = target; };
     std::string getTargetDirectory() const { return fileOptions.targetDirectory; };
-    void setRelocDirectory(std::string& dirName) {fileOptions.relocDirectory = dirName; };
+    void setRelocDirectory(std::string dirName) {fileOptions.relocDirectory = dirName; };
     std::string getRelocDirectory() const { return fileOptions.relocDirectory; };
-    void setPhotoExtension(std::string& extension) {fileOptions.resizedPostfix = extension; };
+    void setPhotoExtension(std::string extension) {fileOptions.resizedPostfix = extension; };
     std::string getPhotoExtension() const { return fileOptions.resizedPostfix; };
 
 signals:

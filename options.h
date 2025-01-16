@@ -2,6 +2,7 @@
 #define OPTIONS_H
 
 #include <QDialog>
+#include <QLineEdit>
 #include "PhotoReducerModel.h"
 
 namespace Ui {
@@ -18,33 +19,24 @@ public:
     void setModel(PhotoReducerModel* model);
 
 private slots:
-/*
- * File Options
- */
-    void on_sourceDirectoryLineEdit_textEdited(const QString &srcDir);
     void on_sourceDirBrowsePushButton_clicked();
-    void on_targetDirectoryLineEdit_textEdited(const QString &target);
     void on_targetDirectoryBrowsePushButton_clicked();
-    void on_addExtensionLineEdit_textEdited(const QString &extension);
-    void on_JPGFileTypeCheckBox_stateChanged(int enable);
-    void on_PNGFileTypecheckBox_stateChanged(int enable);
-    void on_fixFileNameCheckBox_stateChanged(int enable);
-    void on_overwriteCheckBox_stateChanged(int enable);
-/*
- * Photo Options
- */
-    void on_maintainRatioCheckBox_stateChanged(int enable);
-    void on_displayResizedCheckBox_stateChanged(int enable);
-    void on_maxWidthLineEdit_textEdited(const QString &width);
-    void on_maxHeightLineEdit_textEdited(const QString &height);
-    void on_scaleFactorLineEdit_textEdited(const QString &scaleFactor);
+    void on_buttonBox_accepted();
 
 private:
     Ui::Options *ui;
     PhotoReducerModel *photoReducermodel;
+    bool hasNumberErrors = false;
     void setFileOptionControls();
     void setPhotoOptionControls();
     void showErrorMessages();
+    bool updateModelFileOptions();
+    bool updateModelPhotoOptions();
+    std::string qLineEdittoString(QLineEdit* lineEdit);
+    std::size_t qLineEditToSizeT(QLineEdit* lineEdit, QString errorName);
+    unsigned int qLineEditToUnsignedInt(QLineEdit* lineEdit, QString errorName)
+        { return static_cast<unsigned int >(qLineEditToSizeT(lineEdit, errorName)); };
+    void numberErrorShow(QString errorName);
 };
 
 #endif // OPTIONS_H
