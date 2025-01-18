@@ -1,5 +1,6 @@
 #include "options.h"
 #include "PhotoReducerModel.h"
+#include <QDialog>
 #include <QErrorMessage>
 #include <QFileDialog>
 #include <QLineEdit>
@@ -44,14 +45,32 @@ void Options::setPhotoOptionControls()
 {
     ui->maintainRatioCheckBox->setChecked(photoReducermodel->getMaintainRation());
     ui->displayResizedCheckBox->setChecked(photoReducermodel->getDisplayResized());
-    ui->maxWidthLineEdit->setText(QString::number(photoReducermodel->getMaxWidth()));
-    ui->maxHeightLineEdit->setText(QString::number(photoReducermodel->getMaxHeight()));
-    ui->scaleFactorLineEdit->setText(QString::number(photoReducermodel->getScaleFactor()));
+
+/*
+ * Line edits should be empty if this is initialization.
+ */
+    std::size_t checkNum;
+    if ((checkNum = photoReducermodel->getMaxWidth()) > 0)
+    {
+        ui->maxWidthLineEdit->setText(QString::number(checkNum));
+    }
+
+    if ((checkNum = photoReducermodel->getMaxHeight()) > 0)
+    {
+        ui->maxHeightLineEdit->setText(QString::number(checkNum));
+    }
+
+    if ((checkNum = photoReducermodel->getScaleFactor()) > 0)
+    {
+        ui->scaleFactorLineEdit->setText(QString::number(checkNum));
+    }
 }
 
 void Options::on_sourceDirBrowsePushButton_clicked()
 {
-    QString sourceDir = QFileDialog::getExistingDirectory(nullptr, "Source Directory",
+    QString sourceDir = ui->sourceDirectoryLineEdit->text();
+
+    sourceDir = QFileDialog::getExistingDirectory(nullptr, "Source Directory",
         sourceDir, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
     ui->sourceDirectoryLineEdit->setText(sourceDir);
@@ -59,7 +78,9 @@ void Options::on_sourceDirBrowsePushButton_clicked()
 
 void Options::on_targetDirectoryBrowsePushButton_clicked()
 {
-    QString targetDir = QFileDialog::getExistingDirectory(nullptr, "Target Directory",
+    QString targetDir = ui->targetDirectoryLineEdit->text();
+
+    targetDir = QFileDialog::getExistingDirectory(nullptr, "Target Directory",
         targetDir, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
     ui->targetDirectoryLineEdit->setText(targetDir);
@@ -85,27 +106,24 @@ bool Options::updateModelFileOptions()
     photoReducermodel->setOverwriteFiles(ui->overwriteCheckBox->isChecked());
     photoReducermodel->setMakeWebSafe(ui->fixFileNameCheckBox->isChecked());
 
-    return photoReducermodel->fileOptionsAreGood();
+    return photoReducermodel->fileOptionsAreGood()? false : true;
 }
 
 bool Options::updateModelPhotoOptions()
 {
     bool hasPhotoErrors = false;
 
-    photoReducermodel->setMaxWidth(qLineEditToSizeT(ui->maxWidthLineEdit, "Maxium Width"));
-    if (hasNumberErrors)
+    if (!photoReducermodel->setMaxWidth(ui->maxWidthLineEdit->text()))
     {
         hasPhotoErrors = true;
     }
 
-    photoReducermodel->setMaxHeight(qLineEditToSizeT(ui->maxHeightLineEdit, "Maxium Height"));
-    if (hasNumberErrors)
+    if (!photoReducermodel->setMaxHeight(ui->maxHeightLineEdit->text()))
     {
         hasPhotoErrors = true;
     }
 
-    photoReducermodel->setScaleFactor(qLineEditToUnsignedInt(ui->scaleFactorLineEdit, "Scale Factor"));
-    if (hasNumberErrors)
+    if (!photoReducermodel->setScaleFactor(ui->scaleFactorLineEdit->text()))
     {
         hasPhotoErrors = true;
     }
@@ -127,33 +145,6 @@ std::string Options::qLineEdittoString(QLineEdit *lineEdit)
     std::string output = input.toStdString();
 
     return output;
-}
-
-std::size_t Options::qLineEditToSizeT(QLineEdit *lineEdit, QString errorName)
-{
-    hasNumberErrors = false;
-
-    bool ok;
-    std:size_t output = 0;
-    QString input = lineEdit->text();
-
-    output = static_cast<std::size_t>(input.toUInt(&ok, 10));
-    if (!ok)
-    {
-        numberErrorShow(errorName);
-        output = 0;
-    }
-
-    return output;
-}
-
-void Options::numberErrorShow(QString errorName)
-{
-    QString errorMessage = errorName + " must be an integer value";
-    QErrorMessage errorBox(this);
-    hasNumberErrors = true;
-    errorBox.showMessage(errorMessage);
-    errorBox.exec();
 }
 
 void Options::on_buttonBox_accepted()

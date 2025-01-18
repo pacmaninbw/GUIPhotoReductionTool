@@ -67,8 +67,14 @@ std::size_t PhotoReducerModel::resizeAllPhotos()
     return photosResized;
 }
 
-bool PhotoReducerModel::setMaxWidth(int width)
+bool PhotoReducerModel::setMaxWidth(QString qsWidth)
 {
+    if (qsWidth.isEmpty())
+    {
+        return true;
+    }
+
+    int width = qstringToInt(qsWidth);
     if (width > 0)
     {
         photoOptions.maxWidth = width;
@@ -78,8 +84,14 @@ bool PhotoReducerModel::setMaxWidth(int width)
     return false;
 }
 
-bool PhotoReducerModel::setMaxHeight(int height)
+bool PhotoReducerModel::setMaxHeight(QString qsHeight)
 {
+    if (qsHeight.isEmpty())
+    {
+        return true;
+    }
+
+    int height = qstringToInt(qsHeight);
     if (height > 0)
     {
         photoOptions.maxHeight = height;
@@ -89,8 +101,14 @@ bool PhotoReducerModel::setMaxHeight(int height)
     return false;
 }
 
-bool PhotoReducerModel::setScaleFactor(int scaleFactor)
+bool PhotoReducerModel::setScaleFactor(QString qsScaleFactor)
 {
+    if (qsScaleFactor.isEmpty())
+    {
+        return true;
+    }
+
+    int scaleFactor = qstringToInt(qsScaleFactor);
     if (scaleFactor > 20 && scaleFactor < 90)
     {
         photoOptions.scaleFactor = scaleFactor;
@@ -124,4 +142,19 @@ bool PhotoReducerModel::hasPhotoSize()
 {
     return (photoOptions.maxWidth || photoOptions.maxHeight || photoOptions.scaleFactor);
 }
+
+int PhotoReducerModel::qstringToInt(QString input)
+{
+    int output = 0;
+    bool ok;
+
+    output = static_cast<std::size_t>(input.toInt(&ok, 10));
+    if (!ok)
+    {
+        output = -1;
+    }
+
+    return output;
+}
+
 

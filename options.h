@@ -26,17 +26,12 @@ private slots:
 private:
     Ui::Options *ui;
     PhotoReducerModel *photoReducermodel;
-    bool hasNumberErrors = false;
     void setFileOptionControls();
     void setPhotoOptionControls();
     void showErrorMessages();
     bool updateModelFileOptions();
     bool updateModelPhotoOptions();
     std::string qLineEdittoString(QLineEdit* lineEdit);
-    std::size_t qLineEditToSizeT(QLineEdit* lineEdit, QString errorName);
-    unsigned int qLineEditToUnsignedInt(QLineEdit* lineEdit, QString errorName)
-        { return static_cast<unsigned int >(qLineEditToSizeT(lineEdit, errorName)); };
-    void numberErrorShow(QString errorName);
 };
 
 #endif // OPTIONS_H

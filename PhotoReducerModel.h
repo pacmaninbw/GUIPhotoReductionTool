@@ -5,6 +5,7 @@
 #include "PhotoOptions.h"
 #include "PhotoFileList.h"
 #include <QObject>
+#include <QString>
 #include <string>
 
 class MainWindow;
@@ -32,11 +33,11 @@ public:
     bool getMaintainRation() const { return photoOptions.maintainRatio; };
     void setDisplayResized(bool enable) { photoOptions.displayResized = enable; };
     bool getDisplayResized() const { return photoOptions.displayResized; };
-    bool setMaxWidth(int width);
+    bool setMaxWidth(QString width);
     std::size_t getMaxWidth() const { return photoOptions.maxWidth; };
-    bool setMaxHeight(int height);
+    bool setMaxHeight(QString height);
     std::size_t getMaxHeight() const { return photoOptions.maxHeight; };
-    bool setScaleFactor(int scaleFactor);
+    bool setScaleFactor(QString scaleFactor);
     unsigned int getScaleFactor() const { return photoOptions.scaleFactor; };
     bool setMinWidth(int width);
     std::size_t getMinWidth() const { return photoOptions.minWidth; };
@@ -67,6 +68,7 @@ signals:
 private:
     bool hasRatioErrors();
     bool hasPhotoSize();
+    int qstringToInt(QString input);
     FileOptions fileOptions;
     PhotoOptions photoOptions;
     std::string errorsForMessage;
