@@ -3,6 +3,7 @@
 
 #include "PhotoReducerModel.h"
 
+#include <QLCDNumber>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -27,6 +28,7 @@ private:
     Ui::MainWindow *ui;
     PhotoReducerModel *photoReducermodel;
     void updateControlValues();
-    void initProgressBarAndLCDs();
+    void initLCDs();
+    void configureLCD(QLCDNumber* lcd);
 };
 #endif // MAINWINDOW_H

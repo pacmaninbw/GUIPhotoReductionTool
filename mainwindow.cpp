@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 #include "options.h"
 #include "PhotoReducerModel.h"
+#include <QPalette>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -43,19 +44,34 @@ void MainWindow::updateControlValues()
     ui->targetDirectoryValueLabel->setText(
         QString::fromStdString(photoReducermodel->getTargetDirectory()));
     
+    configureLCD(ui->filesToResizeLcdNumber);
+    configureLCD(ui->resizedPhotosLcdNumber);
+
     if (photoReducermodel->photoOptionsAreGood())
     {
-        initProgressBarAndLCDs();
+        initLCDs();
         ui->resizePhotosButton->setEnabled(true);
     }
 }
 
-void MainWindow::initProgressBarAndLCDs()
+void MainWindow::initLCDs()
 {
     std::size_t photosToResize = photoReducermodel->findAllPhotos();
+
+    configureLCD(ui->filesToResizeLcdNumber);
+    configureLCD(ui->resizedPhotosLcdNumber);
+
     ui->filesToResizeLcdNumber->display(static_cast<int>(photosToResize));
     ui->resizedPhotosLcdNumber->display(static_cast<int>(0));
-    ui->progressBar->setRange(0, static_cast<int>(photosToResize));
+}
+
+void MainWindow::configureLCD(QLCDNumber *lcd)
+{
+    QPalette palette = lcd->palette();
+    palette.setColor(QPalette::Window, Qt::black); // Set background color to black
+    palette.setColor(QPalette::WindowText, Qt::green); // Set text color to green
+    lcd->setAutoFillBackground(true);
+    lcd->setPalette(palette);
 }
 
 void MainWindow::on_resizePhotosButton_clicked()
