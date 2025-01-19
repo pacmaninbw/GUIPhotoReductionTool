@@ -78,5 +78,6 @@ void MainWindow::on_resizePhotosButton_clicked()
 {
     std::size_t resizedCount = photoReducermodel->resizeAllPhotos();
     ui->resizedPhotosLcdNumber->display(static_cast<int>(resizedCount));
+    ui->resizePhotosButton->setEnabled(false);
 }
 
