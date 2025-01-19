@@ -58,9 +58,6 @@ void MainWindow::initLCDs()
 {
     std::size_t photosToResize = photoReducermodel->findAllPhotos();
 
-    configureLCD(ui->filesToResizeLcdNumber);
-    configureLCD(ui->resizedPhotosLcdNumber);
-
     ui->filesToResizeLcdNumber->display(static_cast<int>(photosToResize));
     ui->resizedPhotosLcdNumber->display(static_cast<int>(0));
 }
