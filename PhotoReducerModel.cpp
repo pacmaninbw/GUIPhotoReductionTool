@@ -16,13 +16,6 @@ PhotoReducerModel::PhotoReducerModel(QObject *parent)
     fileOptions.targetDirectory = fileOptions.sourceDirectory;
 }
 
-bool PhotoReducerModel::fileOptionsAreGood()
-{
-    bool optionsGood = true;
-
-    return optionsGood;
-}
-
 bool PhotoReducerModel::photoOptionsAreGood()
 {
     bool optionsGood = true;
@@ -46,7 +39,7 @@ std::size_t PhotoReducerModel::findAllPhotos()
 {
     std::size_t photosFound = 0;
 
-    if (fileOptionsAreGood() && photoOptionsAreGood())
+    if (photoOptionsAreGood())
     {
         photoList = buildPhotoInputAndOutputList(fileOptions);
         photosFound = photoList.size();
@@ -59,7 +52,7 @@ std::size_t PhotoReducerModel::resizeAllPhotos()
 {
     std::size_t photosResized = 0;
 
-    if (fileOptionsAreGood() && photoOptionsAreGood())
+    if (photoOptionsAreGood())
     {
         photosResized = resizeAllPhotosInList(photoOptions, photoList);
     }
@@ -133,7 +126,6 @@ bool PhotoReducerModel::hasRatioErrors()
         errorsForMessage +=  "Only one of Maximum Width or Maximum Height can be used with maintain ratio\n";
         hasErrors = true;
     }
-
 
     return hasErrors;
 }

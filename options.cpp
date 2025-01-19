@@ -96,7 +96,7 @@ void Options::showErrorMessages()
     photoReducermodel->errorWasShown();
 }
 
-bool Options::updateModelFileOptions()
+void Options::updateModelFileOptions()
 {
     photoReducermodel->setSourceDirectory(qLineEdittoString(ui->sourceDirectoryLineEdit));
     photoReducermodel->setTargetDirectory(qLineEdittoString(ui->targetDirectoryLineEdit));
@@ -105,8 +105,6 @@ bool Options::updateModelFileOptions()
     photoReducermodel->setPNGFiles(ui->PNGFileTypecheckBox->isChecked());
     photoReducermodel->setOverwriteFiles(ui->overwriteCheckBox->isChecked());
     photoReducermodel->setMakeWebSafe(ui->fixFileNameCheckBox->isChecked());
-
-    return photoReducermodel->fileOptionsAreGood()? false : true;
 }
 
 bool Options::updateModelPhotoOptions()
@@ -151,10 +149,8 @@ void Options::on_buttonBox_accepted()
 {
     QString temp;
     bool hasErrors = false;
-    if (updateModelFileOptions())
-    {
-        hasErrors = true;
-    }
+
+    updateModelFileOptions();
 
     if (updateModelPhotoOptions())
     {

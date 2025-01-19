@@ -29,7 +29,7 @@ private:
     void setFileOptionControls();
     void setPhotoOptionControls();
     void showErrorMessages();
-    bool updateModelFileOptions();
+    void updateModelFileOptions();
     bool updateModelPhotoOptions();
     std::string qLineEdittoString(QLineEdit* lineEdit);
 };

@@ -19,7 +19,6 @@ public:
     ~PhotoReducerModel() = default;
     FileOptions getFileOptions() { return fileOptions; };
     PhotoOptions getPhotoOptions() { return photoOptions; };
-    bool fileOptionsAreGood();
     bool photoOptionsAreGood();
     std::string getErrorString() { return errorsForMessage; };
     void errorWasShown() { errorsForMessage.clear(); };
@@ -39,10 +38,7 @@ public:
     std::size_t getMaxHeight() const { return photoOptions.maxHeight; };
     bool setScaleFactor(QString scaleFactor);
     unsigned int getScaleFactor() const { return photoOptions.scaleFactor; };
-    bool setMinWidth(int width);
-    std::size_t getMinWidth() const { return photoOptions.minWidth; };
-    bool setMinHeight(int height);
-    std::size_t getMinHeight() const { return photoOptions.minHeight; };
+
 /*
  * File Options Methods
  */

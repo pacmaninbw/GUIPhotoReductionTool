@@ -43,7 +43,7 @@ void MainWindow::updateControlValues()
     ui->targetDirectoryValueLabel->setText(
         QString::fromStdString(photoReducermodel->getTargetDirectory()));
     
-    if (photoReducermodel->fileOptionsAreGood() && photoReducermodel->photoOptionsAreGood())
+    if (photoReducermodel->photoOptionsAreGood())
     {
         initProgressBarAndLCDs();
         ui->resizePhotosButton->setEnabled(true);
