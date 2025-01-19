@@ -1,8 +1,6 @@
 #ifndef PHOTO_OPTIONS_H_
 #define PHOTO_OPTIONS_H_
 
-#include <string>
-
 struct PhotoOptions
 {
 	bool displayResized = false;
