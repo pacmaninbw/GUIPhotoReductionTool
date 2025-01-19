@@ -72,6 +72,7 @@ void MainWindow::configureLCD(QLCDNumber *lcd)
     palette.setColor(QPalette::WindowText, Qt::green); // Set text color to green
     lcd->setAutoFillBackground(true);
     lcd->setPalette(palette);
+    lcd->setSegmentStyle(QLCDNumber::Flat);
 }
 
 void MainWindow::on_resizePhotosButton_clicked()
